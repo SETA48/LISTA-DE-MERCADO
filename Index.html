@@ -19,7 +19,7 @@
 
     }
 
-    input#Tarea {
+    input#tarea {
     height: 23px;
     border-radius: 10px;
     border: solid 1px #ebebeb;
@@ -32,7 +32,7 @@
     font-style: italic;
 }
 
-div#Agregar {
+div#agregar {
     position: relative;
     right: 16px;
     float: right;
@@ -47,6 +47,42 @@ div#Agregar {
     font-style: italic;
 }
 
+div#contenedor {
+    position: relative;
+    top: 60px;
+    left: 19px;
+    background: #58d3e3;
+    width: 361px;
+    height: 390px;
+    overflow-y: auto;
+    padding: 2px;
+    border-radius: 9px;
+}
+
+.nombre {
+    float: left;
+    width: 280px;
+    height: 16px;
+    margin-bottom: 4px;
+    border: solid 1px #ebebeb;
+    padding-left: 10px;
+    border-radius: 7px;
+    margin-right: 9px;
+    font-style: italic;
+}
+
+.estado {
+    float: left;
+    width: 27px;
+    height: 22px;
+    margin-bottom: 7px;
+    border: solid 1px #ebebeb;
+    padding-left: 5px;
+    border-radius: 7px;
+    margin-right: 9px;
+    font-style: italic;
+}
+
     </style>
 
 <script>
@@ -54,48 +90,61 @@ div#Agregar {
     var datos = [];
 
     var agregaritem = function () {
-        var Texto = document.getElementById('Tarea').value
-        console.log(Texto)
-        datos.push({Nombre:Texto,Estado:'No'})
+        var texto = document.getElementById('tarea').value
+        console.log(texto)
+        datos.push({nombre:texto,estado:'No'})
         console.log(datos)
+        cargardatos()
+    }
 
+    var cambiarestado = function(id) {
+        console.log(id)
+        if(datos[id].estado == 'No'){
+            datos[id].estado = 'SI'  
+        }else{
+            datos[id].estado = 'No'
+        }
+        cargardatos()
+    }
+
+
+    var cargardatos = function(){
+        var contenedor = document.getElementById('contenedor')
+        contenedor.innerHTML = "";
+
+        for (let i = 0; i < datos.length; i++) {
+
+        var contenido =         "<div class='item'>"+
+                                "<div class='nombre'>"+ datos[i].nombre +"</div>"+
+                                "<div class='estado' onclick='cambiarestado("+ i +")'>"+ datos[i].estado +"</div>"+
+                                "</div>"
+
+        contenedor.innerHTML = contenedor.innerHTML + contenido                  
     }
 
 
 
-
-
-
+}
 </script>
+
 
 
     <div id="Planeador">
 
-        <input type="text" id="Tarea">
-        <div id="Agregar" onclick="agregaritem()">Agregar</div>
+        <input type="text" id="tarea">
+        <div id="agregar" onclick="agregaritem()" >Agregar</div>
 
-        <div id="Contenedor"> 
-            <div class="Item">
-                <div class="Nombre">Tarea X</div>
-                <div class="Estado">NO</div>
-            </div>
-            <div class="Item">
-                <div class="Nombre">Tarea X</div>
-                <div class="Estado">NO</div>
-            </div>
-            <div class="Item">
-                <div class="Nombre">Tarea X</div>
-                <div class="Estado">NO</div>
-            </div>
-            <div class="Item">
-                <div class="Nombre">Tarea X</div>
-                <div class="Estado">NO</div>
-            </div>
+        <div id="contenedor"> 
+            <!--<div class="Item">
+                <div class="nombre">Tarea X</div>
+                <div class="estado">NO</div>
+                </div> -->
+            
         </div>
 
     </div>
 
-    </div>
+    
     
 
 
