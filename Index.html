@@ -83,11 +83,34 @@ div#contenedor {
     font-style: italic;
 }
 
-    </style>
+</style>
+
+<div id="Planeador">
+
+    <input type="text" id="tarea">
+    <div id="agregar" onclick="agregaritem()" >Agregar</div>
+
+    <div id="contenedor"> 
+        <!--<div class="Item">
+            <div class="nombre">Tarea X</div>
+            <div class="estado">NO</div>
+            </div> -->
+        
+    </div>
+
+</div>
+
+<div onclick="guardarstorege()">Guardar</div> 
+<div onclick="leerstorege()">Leer</div>
+<div onclick="borrar()">Borrar</div>
+<div onclick="borrarsolodatos()">borrar solo datos</div>
+
+
 
 <script>
 
     var datos = [];
+
 
     var agregaritem = function () {
         var texto = document.getElementById('tarea').value
@@ -95,7 +118,11 @@ div#contenedor {
         datos.push({nombre:texto,estado:'No'})
         console.log(datos)
         cargardatos()
+        //CONVERTIR OBJETOS EN UNA CADENA DE TEXTO PARA ALMACENAR
+        var cadenatexto = JSON.stringify(datos)
+        localStorage.setItem('datos',cadenatexto)
     }
+
 
     var cambiarestado = function(id) {
         console.log(id)
@@ -104,9 +131,18 @@ div#contenedor {
         }else{
             datos[id].estado = 'No'
         }
+        localStorage.setItem('datos',JSON.stringify(datos))
         cargardatos()
     }
+    //BORRAR TODO
+    var borrar = function(){
+        localStorage.clear()
 
+    }
+    //BORRAR ALGO ESPECIFICO
+    var borrarsolodatos = function(){
+        localStorage.removeItem('datos')
+    }
 
     var cargardatos = function(){
         var contenedor = document.getElementById('contenedor')
@@ -124,27 +160,45 @@ div#contenedor {
 
 
 
+    }
+    var cargardatoslocalstorege = function(){
+        //PROCESO PARA VOLVER DE CADENA DE TEXTO A ARRAY DE DATOS
+        var misdatos = JSON.parse(localStorage.getItem('datos'))
+        if(misdatos == null){
+            datos = []
+
+        }
+        else
+        {
+        console.log(misdatos)
+        datos = misdatos
+        console.log(datos)
+        cargardatos()
+        }
+    
+        
+    }
+
+    cargardatoslocalstorege()
+//ALMACENAR EN EL NAVEGADOR
+var guardarstorege = function() {
+    localStorage.setItem("nombre","Sebastian Trujillo")
+    localStorage.setItem("apellido","Trujillo")
+    localStorage.setItem("dirección","Calle 10")
 }
+
+var leerstorege = function(){
+    alert(localStorage.getItem("nombre"))
+}
+
+setInterval(function(){
+    console.log('hola')
+
+},1000)
+
+
 </script>
 
-
-
-    <div id="Planeador">
-
-        <input type="text" id="tarea">
-        <div id="agregar" onclick="agregaritem()" >Agregar</div>
-
-        <div id="contenedor"> 
-            <!--<div class="Item">
-                <div class="nombre">Tarea X</div>
-                <div class="estado">NO</div>
-                </div> -->
-            
-        </div>
-
-    </div>
-
-    
     
 
 
